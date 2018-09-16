@@ -1,9 +1,6 @@
 package com.sudin.blog.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -16,6 +13,17 @@ public class Post {
     private String title;
     private String body;
     private Date dateCreated;
+
+    @ManyToOne
+    private User creator;
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
+    }
 
     public Post() {
     }

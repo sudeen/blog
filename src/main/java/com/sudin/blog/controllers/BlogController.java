@@ -1,8 +1,11 @@
 package com.sudin.blog.controllers;
 
+import com.sudin.blog.configs.CustomUserDetails;
 import com.sudin.blog.entities.Post;
 import com.sudin.blog.service.PostService;
+import com.sudin.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +20,9 @@ public class BlogController {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping(value = "/")
     public String index() {
         return "index";
@@ -28,11 +34,14 @@ public class BlogController {
     }
 
     @PostMapping(value = "/post")
-    public void publishPosts(@RequestBody Post post) {
+    public String publishPosts(@RequestBody Post post) {
+        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (post.getDateCreated() == null)
             post.setDateCreated(new Date());
-
+        post.setCreator(userService.getUser(userDetails.getUsername()));
         postService.insert(post);
+
+        return "post was published";
     }
 
 }
