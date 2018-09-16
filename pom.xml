@@ -55,6 +55,12 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <!--Need to add this dependency to run the application-->
         <dependency>
             <groupId>commons-logging</groupId>

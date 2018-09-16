@@ -35,6 +35,7 @@ public class BlogApplication {
     public void authenticationManager(AuthenticationManagerBuilder builder, UserRepository repository, UserService userService) throws Exception {
         if (repository.count()==0)
             userService.save(new User("admin", "adminPassword", Arrays.asList(new Role("USER"), new Role("ACTUATOR") , new Role("ADMIN"))));
+        userService.save(new User("userOne", "password", Arrays.asList(new Role("USER"), new Role("ACTUATOR"))));
         builder.userDetailsService(userDetailsService(repository)).passwordEncoder(passwordEncoder);
     }
 
