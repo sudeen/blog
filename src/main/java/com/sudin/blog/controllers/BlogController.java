@@ -6,12 +6,15 @@ import com.sudin.blog.service.PostService;
 import com.sudin.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
 
-@RestController
+
+/*To return the view of HTML use @Controller annotation instead of @RestController*/
+@Controller
 public class BlogController {
 
     @Autowired
