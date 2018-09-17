@@ -6,15 +6,17 @@ import com.sudin.blog.service.PostService;
 import com.sudin.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
 import java.util.List;
 
 
 /*To return the view of HTML use @Controller annotation instead of @RestController*/
-@Controller
+/*@RestController does not allow to return the view as @Controller does
+* While using @RestController ModelAndView is used to return the view as usual*/
+@RestController
 public class BlogController {
 
     @Autowired
@@ -24,8 +26,11 @@ public class BlogController {
     private UserService userService;
 
     @GetMapping(value = "/")
-    public String index() {
-        return "index";
+    public ModelAndView index() {
+        ModelAndView modelAndView = new ModelAndView();
+        /*This view name is the html page name that is in the resources folder*/
+        modelAndView.setViewName("index");
+        return modelAndView;
     }
 
     @GetMapping(value = "/posts")
@@ -41,7 +46,7 @@ public class BlogController {
         post.setCreator(userService.getUser(userDetails.getUsername()));
         postService.insert(post);
 
-        return "post was published";
+        return "published";
     }
 
     @GetMapping(value = "/posts/{username}")

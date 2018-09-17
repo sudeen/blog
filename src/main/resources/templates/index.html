@@ -10,10 +10,38 @@
     <div class="row">
         <div class="twelve columns">
             <h1>My Blog</h1>
+            <ul>
+                <li v-for="post in posts">
+                    <h3>{{post.title}}</h3>
+                    <p>{{post.body}}</p>
+                    <hr/>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
-</body>
+
+
+<!--If the scripts are outside the body tag there will a problem for axios to fetch data-->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://vuejs.org/js/vue.js"></script>
+<script>
+    var app = new Vue({
+        el: '#root',
+        data: {posts: []},
+        mounted() {
+            this.fetchPosts();
+        },
+        methods: {
+            fetchPosts() {
+                axios.get("/posts").then(function(response) {
+                    this.posts = response.data;
+                }.bind(this));
+            }
+        }
+    });
+</script>
+</body>
+
+
 </html>
